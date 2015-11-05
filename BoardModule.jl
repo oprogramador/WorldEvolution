@@ -1,9 +1,9 @@
 module BoardModule
 
+using World
 import World.FieldModule.Field
 import World.AnimalModule.Animal
 import World.PositionModule.Position
-import World.Utils
 
 type Board
   fields::Array{Field}
@@ -12,9 +12,7 @@ end
 
 function mutate()
   for animal in this.animals
-    animal.force += Utils.plus_minus_rand(0.1)
-    animal.speed += Utils.plus_minus_rand(0.1)
-    animal.temperature += Utils.plus_minus_rand(0.1)
+    World.AnimalModule.mutate(animal)
   end
 end
 
@@ -24,7 +22,7 @@ end
 
 function move()
   for animal in this.animals
-    position = animal.position + rand()
+    World.AnimalModule.move(animal, BoardModule)
   end
 end
 
