@@ -1,5 +1,7 @@
 module BoardModule
 
+import JSON
+
 using World
 import World.FieldModule.Field
 import World.AnimalModule.Animal
@@ -8,6 +10,17 @@ import World.PositionModule.Position
 type Board
   fields::Array{Field}
   animals::Array{Animal}
+end
+
+function toDict()
+  Dict(
+    "fields" => map((x)->World.FieldModule.toDict(x), this.fields),
+    "animals" => map((x)->World.AnimalModule.toDict(x), this.animals),
+  )
+end
+
+function serialize()
+  JSON.json(toDict())
 end
 
 function mutate()
@@ -26,15 +39,48 @@ function move()
   end
 end
 
-function init(width, height, n)
+function step()
+   move()
+   mutate()
+end
+
+function create_dir()
+  base_dir = "evolution_output"
+  dir = base_dir*"/"*Dates.format(now(), "yyyy-mm-dd_HH-MM-SS")*"_"*randstring()
+  if !isdir(base_dir)
+    mkdir(base_dir)
+  end
+  if !isdir(dir)
+    mkdir(dir)
+  end
+  dir
+end
+
+function write_to_file(dir, i)
+  f = open("$dir/$i.json", "w")
+  write(f, serialize())
+  close(f)
+end
+
+function simulate(n)
+  dir = create_dir()
+  write_to_file(dir, 0)
+  for i in 1:n
+    step()
+    write_to_file(dir, i)
+  end
+end
+
+function init(width, height, n, max_speed)
   fields = fill(Field(0), width, height)
   animals = Array{Animal}(n)
   for i in 1:n
-    animals[i] = Animal(rand(), rand(), rand(), Position(floor(rand()*width), floor(rand()*height)))
+    animals[i] = Animal(rand(), rand() * max_speed, rand(), Position(floor(rand()*width), floor(rand()*height)))
   end
   Board(fields, animals)
 end
 
-this = init(100, 100, 3)
+this = init(10, 10, 3, 3)
+simulate(20)
 
 end

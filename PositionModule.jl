@@ -5,4 +5,8 @@ type Position
   y::Int32
 end
 
+function toDict(this::Position)
+  Dict("x" => this.x, "y" => this.y)
+end
+
 end
