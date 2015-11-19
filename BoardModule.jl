@@ -23,6 +23,22 @@ function serialize()
   JSON.json(toDict())
 end
 
+function eat()
+  for animal in this.animals
+    food = this.fields[animal.position.x, animal.position.y].food
+    this.fields[animal.position.x, animal.position.y].food = 0
+    animal.health += food
+  end
+end
+
+function kill_malnutred()
+  for (i, animal) in enumerate(this.animals)
+    if animal.health <= 0
+      deleteat!(this.animals, i)
+    end
+  end
+end
+
 function mutate()
   for animal in this.animals
     World.AnimalModule.mutate(animal)
@@ -30,7 +46,7 @@ function mutate()
 end
 
 function validate_position(position)
-  position.x >= 0 && position.y >= 0 && position.x < size(this.fields)[1] && position.y < size(this.fields)[2]
+  position.x >= 1 && position.y >= 1 && position.x <= size(this.fields)[1] && position.y <= size(this.fields)[2]
 end
 
 function move()
@@ -40,8 +56,10 @@ function move()
 end
 
 function step()
-   move()
-   mutate()
+  eat()
+  kill_malnutred()
+  move()
+  mutate()
 end
 
 function create_dir()
@@ -72,15 +90,20 @@ function simulate(n)
 end
 
 function init(width, height, n, max_speed)
-  fields = fill(Field(0), width, height)
+  fields = Array{Field}(width, height)
+  for x in 1:width
+    for y in 1:height
+      fields[x, y] = World.FieldModule.create()
+    end
+  end
   animals = Array{Animal}(n)
   for i in 1:n
-    animals[i] = Animal(rand(), rand() * max_speed, rand(), Position(floor(rand()*width), floor(rand()*height)))
+    animals[i] = World.AnimalModule.create(width, height, max_speed)
   end
   Board(fields, animals)
 end
 
-this = init(10, 10, 3, 3)
-simulate(20)
+this = init(10, 10, 8, 3)
+simulate(2000)
 
 end
