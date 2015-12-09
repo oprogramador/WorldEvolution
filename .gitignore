@@ -1,5 +1,6 @@
 *.swp
 *.swo
 NERD_tree_*
-evolution_output
+public/evolution_output
+node_modules
 
