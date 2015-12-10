@@ -6,6 +6,19 @@ router.get('/', function(req, res, next) {
   res.sendfile('views/index.html');
 });
 
+router.get('/all_simulations/', function(req, res, next) {
+  var fs = require('fs');
+  var dirs = fs.readdirSync('public/evolution_output');
+  res.send(JSON.stringify(dirs));
+});
+
+router.get('/all_slides/:simulation_name', function(req, res, next) {
+  var fs = require('fs');
+  console.log(req.query);
+  var files = fs.readdirSync('public/evolution_output/'+req.param('simulation_name'));
+  res.send(JSON.stringify(files));
+});
+
 router.post('/generate/', function(req, res, next) {
   console.log(req);
   var width = parseInt(req.body.width);

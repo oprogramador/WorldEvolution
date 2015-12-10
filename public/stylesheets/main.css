@@ -18,6 +18,12 @@ body {
     vertical-align: middle;
 }
 
+.title {
+    color: blue;
+    font-size: 18px;
+    border: 3px green ridge;
+}
+
 .background {
     background-color: black;
 }
@@ -140,6 +146,10 @@ svg {
 
 .selected_btn {
   background: #a00000;
+}
+
+.selected {
+  background: #ffff00;
 }
 
 .selected_btn:hover {

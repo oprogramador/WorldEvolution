@@ -3,4 +3,4 @@
 NERD_tree_*
 public/evolution_output
 node_modules
-
+npm-debug.log
