@@ -17,6 +17,7 @@ router.get('/all_slides/:simulation_name', function(req, res, next) {
   console.log(req.query);
   var files = fs.readdirSync('public/evolution_output/'+req.param('simulation_name'));
   files = files.map(function(x){ return x.match(/^[0-9]+/)[0]; });
+  files = files.sort(function(a, b){ return parseInt(a) - parseInt(b); });
   res.send(JSON.stringify(files));
 });
 
