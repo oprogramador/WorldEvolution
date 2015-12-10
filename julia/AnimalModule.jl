@@ -23,7 +23,7 @@ function join(a, b)
 end
 
 function create(width, height, max_speed)
-  Animal(rand_int(), 256, rand(), rand() * max_speed, rand(), Position(ceil(rand()*width), ceil(rand()*height)))
+  Animal(rand_int(), 256, rand(), rand() * max_speed, 256 * rand(), Position(ceil(rand()*width), ceil(rand()*height)))
 end
 
 function mutate(this::Animal)

@@ -39,6 +39,13 @@ function kill_malnutred()
   end
 end
 
+function damage_from_heat()
+  for animal in this.animals
+    field = this.fields[animal.position.x, animal.position.y]
+    animal.health -= (field.temperature  - animal.temperature)^2 / 256
+  end
+end
+
 function mutate()
   for animal in this.animals
     World.AnimalModule.mutate(animal)
@@ -72,6 +79,7 @@ function step()
   join();
   eat()
   kill_malnutred()
+  damage_from_heat()
   move()
   mutate()
 end
