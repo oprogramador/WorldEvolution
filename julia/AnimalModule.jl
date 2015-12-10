@@ -6,6 +6,7 @@ import World.Utils
 import World
 
 type Animal
+  id::Int32
   health::Float32
   force::Float32
   speed::Float32
@@ -13,8 +14,16 @@ type Animal
   position::Position
 end
 
+function rand_int()
+  convert(Int, floor(typemax(Int32)*rand()))
+end
+
+function join(a, b)
+  Animal(rand_int(), a.health + b.health, a.force + b.force, 0.5 * (a.speed + b.speed), 0.5 * (a.temperature + b.temperature), a.position)
+end
+
 function create(width, height, max_speed)
-  Animal(256, rand(), rand() * max_speed, rand(), Position(ceil(rand()*width), ceil(rand()*height)))
+  Animal(rand_int(), 256, rand(), rand() * max_speed, rand(), Position(ceil(rand()*width), ceil(rand()*height)))
 end
 
 function mutate(this::Animal)
@@ -38,6 +47,7 @@ end
 
 function toDict(this::Animal)
   Dict(
+    "id" => this.id,
     "health" => this.health,
     "force" => this.force,
     "speed" => this.speed,

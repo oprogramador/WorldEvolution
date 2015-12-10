@@ -55,7 +55,21 @@ function move()
   end
 end
 
+function join()
+  for (i, animal) in enumerate(this.animals)
+    for (k, other) in enumerate(this.animals)
+      if(animal.position.x == other.position.x && animal.position.y == other.position.y && animal.id != other.id && rand() > 0.2)
+          deleteat!(this.animals, i)
+          deleteat!(this.animals, k < i ? k : k - 1)
+          new = World.AnimalModule.join(animal, other)
+          push!(this.animals, new)
+      end
+    end
+  end
+end
+
 function step()
+  join();
   eat()
   kill_malnutred()
   move()

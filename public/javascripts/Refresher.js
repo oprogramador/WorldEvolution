@@ -68,6 +68,9 @@ function Refresher() {
 
     function loadListeners() {
         $('#all_simulations button').click(loadAllSimulationsAjax);
+        $('#all_slides button').click(function() {
+            loadAllSlidesAjax(selectedSimulation);   
+        });
     }
 
     function init() {
