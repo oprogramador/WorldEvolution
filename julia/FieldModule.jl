@@ -18,8 +18,11 @@ function mix_temperature(a, b)
 end
 
 function mutate(this::Field)
+  if rand() < 0.001
+    this.temperature += Utils.plus_minus_rand(128)
+  end
   this.temperature += Utils.plus_minus_rand(0.1)
-  this.food += this.temperature / 256 / 256
+  this.food += this.temperature / 4096
 end
 
 function toDict(this::Field)

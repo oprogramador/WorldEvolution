@@ -39,6 +39,16 @@ function kill_malnutred()
   end
 end
 
+function mutate_temperature()
+  width = size(this.fields)[1]
+  height = size(this.fields)[2]
+  for x in 1:width
+    for y in 1:height
+      World.FieldModule.mutate(this.fields[x, y])
+    end
+  end
+end
+
 function mix_temperature()
   width = size(this.fields)[1]
   height = size(this.fields)[2]
@@ -78,26 +88,30 @@ function move()
 end
 
 function join()
+  to_delete = []
   for (i, animal) in enumerate(this.animals)
     for (k, other) in enumerate(this.animals)
-      if(animal.position.x == other.position.x && animal.position.y == other.position.y && animal.id != other.id && rand() > 0.2)
-          deleteat!(this.animals, i)
+      if(!(i in to_delete) && !(k in to_delete) && animal.position.x == other.position.x && animal.position.y == other.position.y && animal.id != other.id && rand() > 0.2)
+          push!(to_delete, i)
+          push!(to_delete, k)
           deleteat!(this.animals, k < i ? k : k - 1)
           new = World.AnimalModule.join(animal, other)
           push!(this.animals, new)
       end
     end
   end
+  deleteat!(this.animals, sort(unique(to_delete)))
 end
 
 function step()
-  join();
+  join()
   eat()
   kill_malnutred()
   damage_from_heat()
   move()
   mutate()
   mix_temperature()
+  mutate_temperature()
 end
 
 function create_dir()
