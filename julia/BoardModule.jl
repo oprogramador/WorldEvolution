@@ -63,7 +63,7 @@ function step()
 end
 
 function create_dir()
-  base_dir = "evolution_output"
+  base_dir = "public/evolution_output"
   dir = base_dir*"/"*Dates.format(now(), "yyyy-mm-dd_HH-MM-SS")*"_"*randstring()
   if !isdir(base_dir)
     mkdir(base_dir)
@@ -103,7 +103,13 @@ function init(width, height, n, max_speed)
   Board(fields, animals)
 end
 
-this = init(10, 10, 8, 3)
-simulate(2000)
+args_width = convert(Int, float(ARGS[1]))
+args_height = convert(Int, float(ARGS[2]))
+args_n = convert(Int, float(ARGS[3]))
+args_max_speed = float(ARGS[4])
+args_iteration_count = convert(Int, float(ARGS[5]))
+
+this = init(args_width, args_height, args_n, args_max_speed)
+simulate(args_iteration_count)
 
 end

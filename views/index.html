@@ -1,10 +1,70 @@
 <html>
-<body>
+<head>
 <title>Evolution</title>
 <script src="javascripts/lib/jquery-1.11.1.min.js"></script>
-</body>
+<script src="javascripts/lib/jquery.form.min.js"></script>
+<link rel="stylesheet" href="stylesheets/main.css"/>
+</head>
 <body>
-<div id="board"></div>
+<table>
+    <tr>
+        <td>
+            <div id="board"></div>
+        </td>
+        <td>
+            <form id="generate">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="generate_width">width:</label>
+                        </td>
+                        <td>
+                            <input id="generate_width" name="width"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="generate_height">height:</label>
+                        </td>
+                        <td>
+                            <input id="generate_height" name="height"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="generate_n">n:</label>
+                        </td>
+                        <td>
+                            <input id="generate_n" name="n"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="generate_max_speed">max_speed:</label>
+                        </td>
+                        <td>
+                            <input id="generate_max_speed" name="max_speed"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="generate_iteration_count">iteration_count:</label>
+                        </td>
+                        <td>
+                            <input id="generate_iteration_count" name="iteration_count"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%">
+                            <button class="btn" type="submit" style="width:100%">Generate</button> 
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+</table>
 <script src="javascripts/main.js"></script>
+<script src="javascripts/generate.js"></script>
 </body>
 </html>
