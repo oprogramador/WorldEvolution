@@ -1,5 +1,6 @@
 function Refresher() {
     var selectedSimulation;
+    var selectedSlide;
     var drawer;
     var that = this;
 
@@ -16,6 +17,7 @@ function Refresher() {
             var row = document.createElement('div');
             row.setAttribute('name', value);
             row.innerHTML = value;
+            $(row).addClass('selectable');
             $(row).click(function() {
                 loadAllSlidesAjax(value);
             });
@@ -41,16 +43,21 @@ function Refresher() {
             var row = document.createElement('div');
             row.setAttribute('name', value);
             row.innerHTML = value;
-            //$(row).click(function() {
-                //loadAllSlidesAjax(value);
-            //});
+            $(row).addClass('selectable');
+            $(row).click(function() {
+                loadSlide(value);
+            });
             panel.appendChild(row);
         });
     }
 
-    function loadSlideAjax(simulation, ajax) {
-        $.getJSON('evolution_output/2015-12-10_00-25-50_3ycePYfc/0.json', function(data) {
-            drawAll(data);
+    function loadSlide(nr) {
+        selectedSlide = nr;
+        $('#all_slides [name=content] div').removeClass('selected');
+        $('#all_slides [name=content] div[name='+nr+']').addClass('selected');
+
+        $.getJSON('evolution_output/'+selectedSimulation+'/'+nr+'.json', function(data) {
+            drawer.drawAll(data);
         });
     }
 

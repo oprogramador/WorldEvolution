@@ -1,7 +1,7 @@
 function Drawer() {
     function drawAll(data) {
         countAnimals(data)
-            drawFields(data);
+        drawFields(data);
     }
 
     function countAnimals(data) {
@@ -17,7 +17,9 @@ function Drawer() {
     function drawFields(data) {
         var table = document.createElement('table');
         table.setAttribute('border', 2);
-        document.getElementById('board').appendChild(table);
+        var board = document.getElementById('board');
+        board.innerHTML = '';
+        board.appendChild(table);
         data.fields.forEach(function(row, y) {
             var tr = document.createElement('tr');
             table.appendChild(tr);
