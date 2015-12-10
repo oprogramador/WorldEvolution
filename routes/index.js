@@ -14,7 +14,6 @@ router.get('/all_simulations/', function(req, res, next) {
 
 router.get('/all_slides/:simulation_name', function(req, res, next) {
   var fs = require('fs');
-  console.log(req.query);
   var files = fs.readdirSync('public/evolution_output/'+req.param('simulation_name'));
   files = files.map(function(x){ return x.match(/^[0-9]+/)[0]; });
   files = files.sort(function(a, b){ return parseInt(a) - parseInt(b); });
@@ -22,7 +21,6 @@ router.get('/all_slides/:simulation_name', function(req, res, next) {
 });
 
 router.post('/generate/', function(req, res, next) {
-  console.log(req);
   var width = parseInt(req.body.width);
   var height = parseInt(req.body.height);
   var n = parseInt(req.body.n);
