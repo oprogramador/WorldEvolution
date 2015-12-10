@@ -39,6 +39,21 @@ function kill_malnutred()
   end
 end
 
+function mix_temperature()
+  width = size(this.fields)[1]
+  height = size(this.fields)[2]
+  for x in 1:width
+    for y in 1:height
+      if x > 1 && rand() > 0.5
+        World.FieldModule.mix_temperature(this.fields[x, y], this.fields[x - 1, y])
+      end
+      if y > 1 && rand() > 0.5
+        World.FieldModule.mix_temperature(this.fields[x, y], this.fields[x, y - 1])
+      end
+    end
+  end
+end
+
 function damage_from_heat()
   for animal in this.animals
     field = this.fields[animal.position.x, animal.position.y]
@@ -82,6 +97,7 @@ function step()
   damage_from_heat()
   move()
   mutate()
+  mix_temperature()
 end
 
 function create_dir()

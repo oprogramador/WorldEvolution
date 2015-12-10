@@ -11,6 +11,12 @@ function create()
   Field(256 * rand(), 256 * rand())
 end
 
+function mix_temperature(a, b)
+  delta = a.temperature - b.temperature
+  a.temperature -= delta * 0.25
+  b.temperature += delta * 0.25
+end
+
 function mutate(this::Field)
   this.temperature += Utils.plus_minus_rand(0.1)
   this.food += this.temperature / 256 / 256
