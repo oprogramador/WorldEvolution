@@ -24,7 +24,7 @@ end
 function create_phenotype(this::Animal)
   this.force = 0
   this.speed = 0
-  this.temperature = 0
+  this.temperature = Config.max_temperature * 0.5
   this.reproduction_rate = 0
   for (i, gene) in enumerate(this.genotype)
     this.force += (i % 3) * gene
@@ -35,6 +35,15 @@ function create_phenotype(this::Animal)
     this.temperature -= (i % 17) * gene
     this.reproduction_rate += (i % 19) * gene
     this.reproduction_rate -= (i % 23) * gene
+  end
+  if this.speed < Config.animal_min_speed
+    this.speed = Config.animal_min_speed
+  end
+  if this.speed > Config.animal_max_speed
+    this.speed = Config.animal_max_speed
+  end
+  if this.reproduction_rate < Config.animal_min_reproduction_rate
+    this.reproduction_rate = Config.animal_min_reproduction_rate
   end
 end
 
@@ -60,7 +69,7 @@ function reproduct(this::Animal)
   [a, b]
 end
 
-function create(width, height, max_speed)
+function create(width, height)
   genotype = zeros(Int8, Config.genotype_length)
   position = Position(ceil(rand()*width), ceil(rand()*height))
   a = Animal(rand_int(), genotype, Config.max_health, 0, 0, 0, 0, position)

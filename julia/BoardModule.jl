@@ -166,7 +166,7 @@ function simulate(this::Board, n)
   end
 end
 
-function init(width, height, n, max_speed)
+function init(width, height, n)
   fields = Array{Field}(width, height)
   for x in 1:width
     for y in 1:height
@@ -175,7 +175,7 @@ function init(width, height, n, max_speed)
   end
   animals = Array{Animal}(n)
   for i in 1:n
-    animals[i] = World.AnimalModule.create(width, height, max_speed)
+    animals[i] = World.AnimalModule.create(width, height)
   end
   Board(fields, animals)
 end
