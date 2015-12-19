@@ -1,4 +1,5 @@
 module World
+  include("./Config.jl")
   include("./Utils.jl")
   include("./PositionModule.jl")
   include("./FieldModule.jl")

@@ -3,6 +3,7 @@ module AnimalModule
 import World.PositionModule.Position
 import World.PositionModule
 import World.Utils
+import World.Config
 import World
 
 type Animal
@@ -23,17 +24,17 @@ function join(a::Animal, b::Animal)
 end
 
 function create(width, height, max_speed)
-  Animal(rand_int(), 256, rand(), rand() * max_speed, 256 * rand(), Position(ceil(rand()*width), ceil(rand()*height)))
+  Animal(rand_int(), Config.max_health, rand(), rand() * max_speed, Config.max_temperature * rand(), Position(ceil(rand()*width), ceil(rand()*height)))
 end
 
 function mutate(this::Animal)
-  this.force += Utils.plus_minus_rand(0.1)
-  this.speed += Utils.plus_minus_rand(0.1)
-  this.temperature += Utils.plus_minus_rand(0.1)
+  this.force += Utils.plus_minus_rand(Config.animal_force_max_mutation)
+  this.speed += Utils.plus_minus_rand(Config.animal_max_speed_mutation)
+  this.temperature += Utils.plus_minus_rand(Config.animal_temperature_max_mutatuion)
 end
 
 function consume_energy(this::Animal)
-  this.health -= 1
+  this.health -= Config.energy_consumption
 end
 
 function move(this::Animal, validator)

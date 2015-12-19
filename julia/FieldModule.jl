@@ -1,6 +1,7 @@
 module FieldModule
 
 import World.Utils
+import World.Config
 
 type Field
   temperature::Float32
@@ -8,21 +9,21 @@ type Field
 end
 
 function create()
-  Field(256 * rand(), 256 * rand())
+  Field(Config.max_temperature * rand(), Config.max_temperature * rand())
 end
 
 function mix_temperature(a::Field, b::Field)
   delta = a.temperature - b.temperature
-  a.temperature -= delta * 0.25
-  b.temperature += delta * 0.25
+  a.temperature -= delta * Config.mix_temperature_coefficient
+  b.temperature += delta * Config.mix_temperature_coefficient
 end
 
 function mutate(this::Field)
-  if rand() < 0.001
-    this.temperature += Utils.plus_minus_rand(128)
+  if rand() < Config.volcano_eruption_probability
+    this.temperature += Utils.plus_minus_rand(Config.max_temperature * Config.volcano_eruption_grade)
   end
-  this.temperature += Utils.plus_minus_rand(0.1)
-  this.food += this.temperature / 4096
+  this.temperature += Utils.plus_minus_rand(Config.field_temperature_max_mutation)
+  this.food += Config.food_growth
 end
 
 function to_dict(this::Field)

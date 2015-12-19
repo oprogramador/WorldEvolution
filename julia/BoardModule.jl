@@ -6,6 +6,7 @@ using World
 import World.FieldModule.Field
 import World.AnimalModule.Animal
 import World.PositionModule.Position
+import World.Config
 
 type Board
   fields::Array{Field}
@@ -54,10 +55,10 @@ function mix_temperature(this::Board)
   height = size(this.fields)[2]
   for x in 1:width
     for y in 1:height
-      if x > 1 && rand() > 0.5
+      if x > 1 && rand() > Config.mix_temperature_probability
         World.FieldModule.mix_temperature(this.fields[x, y], this.fields[x - 1, y])
       end
-      if y > 1 && rand() > 0.5
+      if y > 1 && rand() > Config.mix_temperature_probability
         World.FieldModule.mix_temperature(this.fields[x, y], this.fields[x, y - 1])
       end
     end
@@ -67,7 +68,7 @@ end
 function damage_from_heat(this::Board)
   for animal in this.animals
     field = this.fields[animal.position.x, animal.position.y]
-    animal.health -= (field.temperature  - animal.temperature)^2 / 256
+    animal.health -= (field.temperature - animal.temperature)^2 * Config.damage_from_heat_coefficient
   end
 end
 
@@ -91,7 +92,7 @@ function join(this::Board)
   to_delete = []
   for (i, animal) in enumerate(this.animals)
     for (k, other) in enumerate(this.animals)
-      if(!(i in to_delete) && !(k in to_delete) && animal.position.x == other.position.x && animal.position.y == other.position.y && animal.id != other.id && rand() > 0.2)
+      if(!(i in to_delete) && !(k in to_delete) && animal.position.x == other.position.x && animal.position.y == other.position.y && animal.id != other.id && rand() > Config.join_probability)
           push!(to_delete, i)
           push!(to_delete, k)
           deleteat!(this.animals, k < i ? k : k - 1)
