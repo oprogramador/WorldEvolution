@@ -9,8 +9,9 @@ module Config
   food_growth = 0.01
   damage_from_heat_coefficient = 0.004
   join_probability = 0.2
-  animal_force_max_mutation = 0.1
-  animal_temperature_max_mutatuion = 0.1
-  animal_max_speed_mutation = 0.1
+  animal_gene_max_mutation = 4
   energy_consumption = 1
+  max_random_damage = 256
+  genotype_length = 32
+  gene_mixing_probability = 0.2
 end

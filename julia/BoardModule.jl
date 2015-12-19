@@ -33,11 +33,13 @@ function eat(this::Board)
 end
 
 function kill_malnutred(this::Board)
+  to_delete = []
   for (i, animal) in enumerate(this.animals)
     if animal.health <= 0
-      deleteat!(this.animals, i)
+      push!(to_delete, i)
     end
   end
+  deleteat!(this.animals, sort(unique(to_delete)))
 end
 
 function mutate_fields(this::Board)
@@ -62,6 +64,12 @@ function mix_temperature(this::Board)
         World.FieldModule.mix_temperature(this.fields[x, y], this.fields[x, y - 1])
       end
     end
+  end
+end
+
+function random_damage(this::Board)
+  for animal in this.animals
+    animal.health -= rand() * Config.max_random_damage / animal.force
   end
 end
 
