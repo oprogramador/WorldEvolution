@@ -12,18 +12,18 @@ type Board
   animals::Array{Animal}
 end
 
-function toDict()
+function to_dict(this::Board)
   Dict(
-    "fields" => map((x)->World.FieldModule.toDict(x), this.fields),
-    "animals" => map((x)->World.AnimalModule.toDict(x), this.animals),
+    "fields" => map((x)->World.FieldModule.to_dict(x), this.fields),
+    "animals" => map((x)->World.AnimalModule.to_dict(x), this.animals),
   )
 end
 
-function serialize()
-  JSON.json(toDict())
+function serialize(this::Board)
+  JSON.json(to_dict(this))
 end
 
-function eat()
+function eat(this::Board)
   for animal in this.animals
     food = this.fields[animal.position.x, animal.position.y].food
     this.fields[animal.position.x, animal.position.y].food = 0
@@ -31,7 +31,7 @@ function eat()
   end
 end
 
-function kill_malnutred()
+function kill_malnutred(this::Board)
   for (i, animal) in enumerate(this.animals)
     if animal.health <= 0
       deleteat!(this.animals, i)
@@ -39,7 +39,7 @@ function kill_malnutred()
   end
 end
 
-function mutate_temperature()
+function mutate_fields(this::Board)
   width = size(this.fields)[1]
   height = size(this.fields)[2]
   for x in 1:width
@@ -49,7 +49,7 @@ function mutate_temperature()
   end
 end
 
-function mix_temperature()
+function mix_temperature(this::Board)
   width = size(this.fields)[1]
   height = size(this.fields)[2]
   for x in 1:width
@@ -64,30 +64,30 @@ function mix_temperature()
   end
 end
 
-function damage_from_heat()
+function damage_from_heat(this::Board)
   for animal in this.animals
     field = this.fields[animal.position.x, animal.position.y]
     animal.health -= (field.temperature  - animal.temperature)^2 / 256
   end
 end
 
-function mutate()
+function mutate(this::Board)
   for animal in this.animals
     World.AnimalModule.mutate(animal)
   end
 end
 
-function validate_position(position)
+function validate_position(this::Board, position::Position)
   position.x >= 1 && position.y >= 1 && position.x <= size(this.fields)[1] && position.y <= size(this.fields)[2]
 end
 
-function move()
+function move(this::Board)
   for animal in this.animals
-    World.AnimalModule.move(animal, BoardModule)
+    World.AnimalModule.move(animal, this)
   end
 end
 
-function join()
+function join(this::Board)
   to_delete = []
   for (i, animal) in enumerate(this.animals)
     for (k, other) in enumerate(this.animals)
@@ -103,15 +103,15 @@ function join()
   deleteat!(this.animals, sort(unique(to_delete)))
 end
 
-function step()
-  join()
-  eat()
-  kill_malnutred()
-  damage_from_heat()
-  move()
-  mutate()
-  mix_temperature()
-  mutate_temperature()
+function step(this::Board)
+  join(this)
+  eat(this)
+  kill_malnutred(this)
+  damage_from_heat(this)
+  move(this)
+  mutate(this)
+  mix_temperature(this)
+  mutate_fields(this)
 end
 
 function create_dir()
@@ -126,18 +126,18 @@ function create_dir()
   dir
 end
 
-function write_to_file(dir, i)
+function write_to_file(this::Board, dir, i)
   f = open("$dir/$i.json", "w")
-  write(f, serialize())
+  write(f, serialize(this))
   close(f)
 end
 
-function simulate(n)
+function simulate(this::Board, n)
   dir = create_dir()
-  write_to_file(dir, 0)
+  write_to_file(this, dir, 0)
   for i in 1:n
-    step()
-    write_to_file(dir, i)
+    step(this)
+    write_to_file(this, dir, i)
   end
 end
 
@@ -162,6 +162,6 @@ args_max_speed = float(ARGS[4])
 args_iteration_count = convert(Int, float(ARGS[5]))
 
 this = init(args_width, args_height, args_n, args_max_speed)
-simulate(args_iteration_count)
+simulate(this, args_iteration_count)
 
 end

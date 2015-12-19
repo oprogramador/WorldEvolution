@@ -11,7 +11,7 @@ function create()
   Field(256 * rand(), 256 * rand())
 end
 
-function mix_temperature(a, b)
+function mix_temperature(a::Field, b::Field)
   delta = a.temperature - b.temperature
   a.temperature -= delta * 0.25
   b.temperature += delta * 0.25
@@ -25,7 +25,7 @@ function mutate(this::Field)
   this.food += this.temperature / 4096
 end
 
-function toDict(this::Field)
+function to_dict(this::Field)
   Dict(
     "temperature" => this.temperature,
     "food" => this.food

@@ -18,7 +18,7 @@ function rand_int()
   convert(Int, floor(typemax(Int32)*rand()))
 end
 
-function join(a, b)
+function join(a::Animal, b::Animal)
   Animal(rand_int(), a.health + b.health, a.force + b.force, 0.5 * (a.speed + b.speed), 0.5 * (a.temperature + b.temperature), a.position)
 end
 
@@ -39,20 +39,20 @@ end
 function move(this::Animal, validator)
   consume_energy(this)
   position = Position(this.position.x + Utils.plus_minus_rand_int(this.speed), this.position.y + Utils.plus_minus_rand_int(this.speed))
-  should_go = validator.validate_position(position)
+  should_go = World.BoardModule.validate_position(validator, position)
   if should_go
     this.position = position
   end
 end
 
-function toDict(this::Animal)
+function to_dict(this::Animal)
   Dict(
     "id" => this.id,
     "health" => this.health,
     "force" => this.force,
     "speed" => this.speed,
     "temperature" => this.temperature,
-    "position" => World.PositionModule.toDict(this.position)
+    "position" => World.PositionModule.to_dict(this.position)
   )
 end
 
