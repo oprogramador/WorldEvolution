@@ -55,6 +55,9 @@ function join(a::Animal, b::Animal)
 end
 
 function reproduct(this::Animal)
+  a = Animal(rand_int(), this.genotype, this.health, this.force, this.speed, this.temperature, this.reproduction_rate, this.position)
+  b = Animal(rand_int(), this.genotype, this.health, this.force, this.speed, this.temperature, this.reproduction_rate, this.position)
+  [a, b]
 end
 
 function create(width, height, max_speed)
@@ -67,7 +70,7 @@ end
 
 function mutate(this::Animal)
   for i in 1:Config.genotype_length
-    this.genotype += Utils.plus_minus_rand_int(Config.animal_gene_max_mutation)
+    this.genotype[i] += Utils.plus_minus_rand_int(Config.animal_gene_max_mutation)
   end 
   create_phenotype(this)
 end

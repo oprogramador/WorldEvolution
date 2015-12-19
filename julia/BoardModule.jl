@@ -112,12 +112,28 @@ function join(this::Board)
   deleteat!(this.animals, sort(unique(to_delete)))
 end
 
+function reproduct(this::Board)
+  to_delete = []
+  to_add = []
+  for (i, animal) in enumerate(this.animals)
+    if rand() < animal.reproduction_rate * Config.reproduction_coefficient
+      new_ones = World.AnimalModule.reproduct(animal)
+      to_add = vcat(to_add, new_ones) 
+      push!(to_delete, i)
+    end
+  end
+  deleteat!(this.animals, sort(unique(to_delete)))
+  this.animals = vcat(this.animals, to_add)
+end
+
+
 function step(this::Board)
   join(this)
   eat(this)
   kill_malnutred(this)
   damage_from_heat(this)
   move(this)
+  reproduct(this)
   mutate(this)
   mix_temperature(this)
   mutate_fields(this)

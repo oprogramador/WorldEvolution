@@ -14,4 +14,5 @@ module Config
   max_random_damage = 256
   genotype_length = 32
   gene_mixing_probability = 0.2
+  reproduction_coefficient = 0.1
 end
