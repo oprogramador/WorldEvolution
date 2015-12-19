@@ -9,8 +9,6 @@ function Drawer() {
 
     function countAnimals(data) {
         data.animals.forEach(function(animal, key) {
-            console.log(data);
-            console.log(animal.position);
             var field = data.fields[animal.position.y - 1][animal.position.x - 1];
             if(typeof field.animals === 'undefined') field.animals = [];
             field.animals.push(animal);
@@ -39,7 +37,6 @@ function Drawer() {
                 td.style.height = 32;
                 if(typeof cell.count !== 'undefined') td.innerHTML = cell.count;
                 tr.appendChild(td);
-                console.log(cell);
             });
         });
     }
@@ -64,7 +61,6 @@ function Drawer() {
     function showFieldStatus(x, y) {
         var dialodDiv = document.createElement('div');
         dialodDiv.style.display = 'none';
-        console.log(simulationData.fields[y][x]);
         showProperties(dialodDiv, simulationData.fields[y][x]);
         $('body').append(dialodDiv);
         $(dialodDiv).dialog({

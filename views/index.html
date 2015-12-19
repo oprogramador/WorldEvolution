@@ -14,72 +14,86 @@
             <div id="board"></div>
         </td>
         <td>
-            <form id="generate">
-                <table>
-                    <tr>
-                        <td>
-                            <label for="generate_width">width:</label>
-                        </td>
-                        <td>
-                            <input id="generate_width" name="width"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="generate_height">height:</label>
-                        </td>
-                        <td>
-                            <input id="generate_height" name="height"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="generate_n">n:</label>
-                        </td>
-                        <td>
-                            <input id="generate_n" name="n"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="generate_max_speed">max_speed:</label>
-                        </td>
-                        <td>
-                            <input id="generate_max_speed" name="max_speed"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="generate_iteration_count">iteration_count:</label>
-                        </td>
-                        <td>
-                            <input id="generate_iteration_count" name="iteration_count"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="100%">
-                            <button class="btn" type="submit" style="width:100%">Generate</button> 
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </td>
-        <td>
-            <div class="title">All simulations</div>
-            <div id="all_simulations">
-                <div name="content" style="height:400px; overflow:scroll"></div>
-                <button class="btn" style="width:100%">Refresh</button>
+            <div name="generate" toggle_mode="short">
+                Generation
+            </div>
+            <div name="generate" toggle_mode="long">
+                <form id="generate">
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="generate_width">width:</label>
+                            </td>
+                            <td>
+                                <input id="generate_width" name="width"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="generate_height">height:</label>
+                            </td>
+                            <td>
+                                <input id="generate_height" name="height"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="generate_n">n:</label>
+                            </td>
+                            <td>
+                                <input id="generate_n" name="n"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="generate_max_speed">max_speed:</label>
+                            </td>
+                            <td>
+                                <input id="generate_max_speed" name="max_speed"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="generate_iteration_count">iteration_count:</label>
+                            </td>
+                            <td>
+                                <input id="generate_iteration_count" name="iteration_count"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="100%">
+                                <button class="btn" type="submit" style="width:100%">Generate</button> 
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </td>
         <td>
-            <div class="title">All slides</div>
-            <div id="all_slides">
-                <div name="content" style="height:400px; overflow:scroll"></div>
-                <button class="btn" style="width:100%">Refresh</button>
+            <div name="all_simulations" toggle_mode="short">
+                All simulations
+            </div>
+            <div name="all_simulations" toggle_mode="long">
+                <div id="all_simulations">
+                    <div name="content" style="height:400px; overflow:scroll"></div>
+                    <button class="btn" style="width:100%">Refresh</button>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div name="all_slides" toggle_mode="short">
+                All slides
+            </div>
+            <div name="all_slides" toggle_mode="long">
+                <div id="all_slides">
+                    <div name="content" style="height:400px; overflow:scroll"></div>
+                    <button class="btn" style="width:100%">Refresh</button>
+                </div>
             </div>
         </td>
     </tr>
 </table>
+<script src="javascripts/Toggle.js"></script>
 <script src="javascripts/Generator.js"></script>
 <script src="javascripts/Drawer.js"></script>
 <script src="javascripts/Refresher.js"></script>

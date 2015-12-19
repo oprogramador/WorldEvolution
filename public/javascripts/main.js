@@ -1,4 +1,5 @@
 (function() {
+    new Toggle();
     var drawer = new Drawer();
     var refresher = new Refresher();
     refresher.setDrawer(drawer);
