@@ -22,5 +22,6 @@ animal_min_reproduction_rate = 1.0
 animal_min_speed = 4.0
 animal_max_speed = World.args_max_speed
 animal_min_force = 1.0
+cooling_from_eating = 8
 
 end

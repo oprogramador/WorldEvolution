@@ -17,9 +17,19 @@ function Drawer() {
         });
     }
 
+    function drawCount(table, data) {
+        var tr = document.createElement('tr'); 
+        var td = document.createElement('td');
+        td.setAttribute('colspan', '100%');
+        tr.appendChild(td);
+        table.appendChild(tr);
+        td.innerHTML = 'Animals count: '+data.animals.length;
+    }
+
     function drawFields(data) {
         var table = document.createElement('table');
         table.setAttribute('border', 2);
+        drawCount(table, data);
         var board = document.getElementById('board');
         board.innerHTML = '';
         board.appendChild(table);

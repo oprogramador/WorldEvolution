@@ -27,7 +27,9 @@ end
 function eat(this::Board)
   for animal in this.animals
     food = this.fields[animal.position.x, animal.position.y].food
-    this.fields[animal.position.x, animal.position.y].food = 0
+    field = this.fields[animal.position.x, animal.position.y]
+    field.food = 0
+    field.temperature -= Config.cooling_from_eating
     animal.health += food
   end
 end
