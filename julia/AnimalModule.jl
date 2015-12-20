@@ -27,14 +27,14 @@ function create_phenotype(this::Animal)
   this.temperature = Config.max_temperature * 0.5
   this.reproduction_rate = 0
   for (i, gene) in enumerate(this.genotype)
-    this.force += (i % 3) * gene
-    this.force -= (i % 5) * gene
-    this.speed += (i % 7) * gene
-    this.speed -= (i % 11) * gene
-    this.temperature += (i % 13) * gene
-    this.temperature -= (i % 17) * gene
-    this.reproduction_rate += (i % 19) * gene
-    this.reproduction_rate -= (i % 23) * gene
+    this.force += (i % 4) * gene
+    this.force -= (i % 5) * gene * Config.phenotype_minus_coefficient
+    this.speed += ((i + 1) % 4) * gene
+    this.speed -= (i % 11) * gene * Config.phenotype_minus_coefficient
+    this.temperature += ((i + 2) % 4) * gene
+    this.temperature -= (i % 17) * gene * Config.phenotype_minus_coefficient
+    this.reproduction_rate += ((i + 3) % 19) * gene
+    this.reproduction_rate -= (i % 23) * gene * Config.phenotype_minus_coefficient
   end
   if this.speed < Config.animal_min_speed
     this.speed = Config.animal_min_speed
