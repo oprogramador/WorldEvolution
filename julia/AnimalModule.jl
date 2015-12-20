@@ -45,6 +45,9 @@ function create_phenotype(this::Animal)
   if this.reproduction_rate < Config.animal_min_reproduction_rate
     this.reproduction_rate = Config.animal_min_reproduction_rate
   end
+  if this.force < Config.animal_min_force
+    this.force = Config.animal_min_force
+  end
 end
 
 function join(a::Animal, b::Animal)
@@ -90,7 +93,9 @@ end
 
 function move(this::Animal, validator)
   consume_energy(this)
-  position = Position(this.position.x + Utils.plus_minus_rand_int(this.speed), this.position.y + Utils.plus_minus_rand_int(this.speed))
+  dx = Utils.plus_minus_rand_int(this.speed)
+  dy = Utils.plus_minus_rand_int(this.speed)
+  position = Position(this.position.x + dx, this.position.y + dy)
   should_go = World.BoardModule.validate_position(validator, position)
   if should_go
     this.position = position
