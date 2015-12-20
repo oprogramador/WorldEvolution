@@ -81,11 +81,11 @@ function create(width, height)
 end
 
 function mutate(this::Animal)
-  i = convert(Int8, 1)
-  di = convert(Int8, 1)
-  while typeof(i) === Int8 && i >= 1 && i <= Config.genotype_length
-    this.genotype[i] += Utils.plus_minus_rand_int(Config.animal_gene_max_mutation)
-    i += di
+  for i in 1:Config.genotype_length
+    result = this.genotype[i] + Utils.plus_minus_rand_int(Config.animal_gene_max_mutation)
+    if result >= typemin(Int8) && result <= typemax(Int8)
+      this.genotype[i] = result
+    end
   end 
   create_phenotype(this)
 end
